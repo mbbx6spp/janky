@@ -33,4 +33,5 @@ module Janky
       end
     end
   end
+  register_chat_service "jabber", ChatService::Jabber
 end
