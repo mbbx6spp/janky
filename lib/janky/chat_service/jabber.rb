@@ -17,8 +17,13 @@ module Janky
         if @rooms.nil? || @pwd.empty?
           raise Error, "JANKY_CHAT_JABBER_ROOMS setting is required"
         end
+        @host = settings["JANKY_CHAT_JABBER_HOST"]
+        if @host.nil? || @pwd.empty?
+          raise Error, "JANKY_CHAT_JABBER_HOST setting is required"
+        end
 
         @client = ::Jabber::Client.new(@jid)
+        @client.connect(@host)
         @client.auth(@pwd)
       end
 
@@ -33,5 +38,6 @@ module Janky
       end
     end
   end
+
   register_chat_service "jabber", ChatService::Jabber
 end
