@@ -12,12 +12,15 @@ module Janky
     post "/setup" do
       nwo  = params["nwo"]
       name = params["name"]
+      puts "nwo=#{nwo}; name=#{name}"
       repo = Repository.setup(nwo, name)
 
       if repo
         url  = "#{settings.base_url}#{repo.name}"
+        puts "A-OK"
         [201, "Setup #{repo.name} at #{repo.uri} | #{url}"]
       else
+        puts "WTF? nwo=#{nwo}"
         [400, "Couldn't access #{nwo}. Check the permissions."]
       end
     end
