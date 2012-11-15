@@ -40,6 +40,7 @@ require "janky/builder/payload"
 require "janky/builder/receiver"
 require "janky/chat_service"
 require "janky/chat_service/campfire"
+require "janky/chat_service/jabber"
 require "janky/chat_service/mock"
 require "janky/exception"
 require "janky/notifier"
@@ -82,7 +83,7 @@ module Janky
     end
 
     if env != "production"
-      settings["DATABASE_URL"] ||= "mysql2://root@localhost/janky_#{env}"
+      settings["DATABASE_URL"] ||= "mysql2://janky@localhost/janky_#{env}"
       settings["JANKY_BASE_URL"] ||= "http://localhost:9393/"
       settings["JANKY_BUILDER_DEFAULT"] ||= "http://localhost:8080/"
       settings["JANKY_CONFIG_DIR"] ||= File.dirname(__FILE__)
