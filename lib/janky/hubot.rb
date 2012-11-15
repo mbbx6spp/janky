@@ -8,19 +8,21 @@ module Janky
   class Hubot < Sinatra::Base
     register Helpers
 
+    use Rack::Logger
+
     # Setup a new repository.
     post "/setup" do
       nwo  = params["nwo"]
       name = params["name"]
-      puts "nwo=#{nwo}; name=#{name}"
+      request.logger "nwo=#{nwo}; name=#{name}"
       repo = Repository.setup(nwo, name)
 
       if repo
         url  = "#{settings.base_url}#{repo.name}"
-        puts "A-OK"
+        request.logger "A-OK"
         [201, "Setup #{repo.name} at #{repo.uri} | #{url}"]
       else
-        puts "WTF? nwo=#{nwo}"
+        request.logger "WTF? nwo=#{nwo}"
         [400, "Couldn't access #{nwo}. Check the permissions."]
       end
     end
